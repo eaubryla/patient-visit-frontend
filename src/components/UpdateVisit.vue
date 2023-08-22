@@ -57,11 +57,11 @@ export default {
     submitForm() {
       axios.put(`http://localhost:8080/api/visits/${this.selectedVisit.visitId}`, this.visitData)
           .then(response => {
-            console.log("Consultation créée avec succès :", response.data);
+            console.log("Consultation modifiée avec succès :", response.data);
             this.$emit("update", response.data);
           })
           .catch(error => {
-            console.error("Erreur lors de la création de la consultation :", error);
+            console.error("Erreur lors de la modification de la consultation :", error);
           });
     },
     cancel() {

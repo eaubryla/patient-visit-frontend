@@ -1,5 +1,4 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
   <PatientsList  msg="Liste des patients"/>
 </template>
 

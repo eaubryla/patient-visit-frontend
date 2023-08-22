@@ -1,7 +1,7 @@
 <template>
   <div v-if="selectedPatient">
     <div>
-      <h3>Visualisation des consultations</h3>
+      <h2>Visualisation des consultations</h2>
       <table>
         <thead>
         <tr>
