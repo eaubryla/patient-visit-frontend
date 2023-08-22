@@ -4,11 +4,11 @@
     <div>
       <label>Patient : </label>
       <select class="col" v-model="selectedPatient" @change="onChange()">
-        <option  v-for="patient in patients" :key="patient.patientId">{{ patient.name }} {{ patient.surname }} - {{ patient.dateOfBirth }} - {{ patient.socialSecurityNumber }}</option>
+        <option  v-for="patient in patients" :key="patient.patientId" :value="patient.patientId">{{ patient.name }} {{ patient.surname }} - {{ patient.dateOfBirth }} - {{ patient.socialSecurityNumber }}</option>
       </select>
     </div>
-    <button @click="ConsultVisit()">Visualiser les Consultations</button>
-    <button @click="CreateVisit()">Créer une Visite</button>
+    <button @click="ConsultVisit">Visualiser les consultations</button>
+    <button @click="CreateVisit">Créer une consultation</button>
     <ConsultVisit v-if="showConsultVisitForm" :selectedPatient="selectedPatient" />
     <CreateVisit v-if="showCreateVisitForm" :selectedPatient="selectedPatient" />
   </div>

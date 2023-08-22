@@ -33,26 +33,19 @@ import axios from "axios";
 
 export default {
   props: {
-    selectedPatient: Object
+    selectedPatient: Number
   },
   data() {
     return {
       patientVisits: []
     };
   },
-  watch: {
-    selectedPatient: {
-      immediate: true,
-      handler(newPatient) {
-        if (newPatient) {
-          this.fetchPatientVisits(newPatient.patientId);
-        }
-      }
-    }
+  mounted() {
+    this.fetchPatientVisits(this.selectedPatient);
   },
   methods: {
-    fetchPatientVisits(patientId) {
-      axios.get(`http://localhost:8080/api/visits/patient/${patientId}`)
+    fetchPatientVisits(selectedPatient) {
+      axios.get(`http://localhost:8080/api/visits/patient/${selectedPatient}`)
           .then(response => {
             this.patientVisits = response.data;
           })
@@ -62,7 +55,7 @@ export default {
     },
     editVisit(visit) {
       // Gérez la modification
-      console.log("Modifier la visite :", visit);
+      console.log("Modifier la consultation :", visit);
     }
   }
 };
