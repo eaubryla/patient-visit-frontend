@@ -1,7 +1,7 @@
 <template>
   <div v-if="selectedPatient">
     <div>
-      <h3>Visualisation des consultation</h3>
+      <h3>Visualisation des consultations</h3>
       <table>
         <thead>
         <tr>
@@ -13,31 +13,38 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="visit in patientVisits" :key="visit.visitId">
+        <tr v-for="visit in patientVisits" :key="visit.visitId" v-bind="selectedVisit">
           <td>{{ visit.date }}</td>
           <td>{{ visit.visitType }}</td>
           <td>{{ visit.visitReason }}</td>
           <td>{{ visit.comments }}</td>
           <td>
-            <button @click="editVisit(visit)">Modifier</button>
+            <button @click="editVisit(visit)" >Modifier</button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
+  <UpdateVisit v-if="showUpdateVisit" :selectedVisit="selectedVisit" :showUpdateVisit="showUpdateVisit" @update="updateVisitData" @cancel="cancel"/>
 </template>
 
 <script>
 import axios from "axios";
+import UpdateVisit from "@/components/UpdateVisit.vue";
 
 export default {
+  components: {
+    UpdateVisit
+  },
   props: {
     selectedPatient: Number
   },
   data() {
     return {
-      patientVisits: []
+      patientVisits: [],
+      showUpdateVisit: false,
+      selectedVisit: null
     };
   },
   mounted() {
@@ -54,8 +61,19 @@ export default {
           });
     },
     editVisit(visit) {
-      // Gérez la modification
-      console.log("Modifier la consultation :", visit);
+      this.selectedVisit = visit;
+      this.showUpdateVisit = true;
+    },
+    cancel() {
+      this.showUpdateVisit = false;
+    },
+    updateVisitData(updatedVisit) {
+      // Recherchez et mettez à jour la visite modifiée dans le tableau
+      const index = this.patientVisits.findIndex(visit => visit.visitId === updatedVisit.visitId);
+      if (index !== -1) {
+        this.patientVisits.splice(index, 1, updatedVisit);
+      }
+      this.showUpdateVisit = false; // Masquez le formulaire de mise à jour
     }
   }
 };
